@@ -1,0 +1,50 @@
+# References
+
+- Almgren, R. & Chriss, N. (2001). Optimal execution of portfolio transactions. Journal of Risk, 3(2), 5-39.
+- Almgren, R., Thum, C., Hauptmann, E. & Li, H. (2005). Direct estimation of equity market impact. Risk, 18(7), 58-62.
+- Bacry, E., Mastromatteo, I. & Muzy, J.-F. (2015). Hawkes processes in finance. Market Microstructure and Liquidity, 1(1), 1550005.
+- Bailey, D. H., Borwein, J., López de Prado, M. & Zhu, Q. J. (2015). The probability of backtest overfitting. Journal of Computational Finance, 20(4), 39-70.
+- Banque de France (2022). Report on the structure of European equity markets. Autorité des marchés financiers, Paris.
+- Bellman, R. (1957). Dynamic Programming. Princeton University Press.
+- Berkowitz, S. A., Logue, D. E. & Noser, E. A. (1988). The total cost of transactions on the NYSE. The Journal of Finance, 43(1), 97-112.
+- Bertsimas, D. & Lo, A. W. (1998). Optimal control of execution costs. Journal of Financial Markets, 1(1), 1-50.
+- Bialkowski, J., Darolles, S. & Le Fol, G. (2008). Improving VWAP strategies: A dynamic volume approach. Journal of Banking & Finance, 32(9), 1709-1722.
+- Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity. Journal of Econometrics, 31(3), 307-327.
+- Bouchaud, J.-P., Farmer, J. D. & Lillo, F. (2010). How markets slowly digest changes in supply and demand. In Handbook of Financial Markets: Dynamics and Evolution. North-Holland.
+- Cartea, A. & Jaimungal, S. (2015). Optimal execution with limit and market orders. Quantitative Finance, 15(8), 1279-1291.
+- Cartea, Á., Donnelly, R. & Jaimungal, S. (2018). Enhancing trading strategies with order book signals. Applied Mathematical Finance, 25(1), 1-35.
+- Cont, R., Kukanov, A. & Stoikov, S. (2014). The price impact of order book events. Journal of Financial Econometrics, 12(1), 47-88.
+- Degryse, H., De Jong, F. & van Kervel, V. (2015). The impact of dark trading and visible fragmentation on market quality. Review of Finance, 19(4), 1587-1622.
+- Directive 2004/39/EC (MiFID I) of the European Parliament and of the Council of 21 April 2004.
+- Directive 2014/65/EU (MiFID II) of the European Parliament and of the Council of 15 May 2014.
+- Easley, D., López de Prado, M. M. & O'Hara, M. (2012). Flow toxicity and liquidity in a high-frequency world. The Review of Financial Studies, 25(5), 1457-1493.
+- ESMA (2023). Annual Statistical Report on EU Securities Markets. European Securities and Markets Authority, Paris.
+- Fama, E. F. (1970). Efficient capital markets: A review of theory and empirical work. The Journal of Finance, 25(2), 383-417.
+- Fang, F., Ni, Y. & Niu, S. (2021). Deep reinforcement learning for optimal execution. Proceedings of the 2021 AAAI Workshop on Reinforcement Learning in Finance.
+- Forsyth, P., Kennedy, J., Tse, S. & Ware, T. (2012). Optimal trade execution and absence of price manipulations in limit order book models. SIAM Journal on Financial Mathematics, 3(1), 163-196.
+- Glosten, L. R. & Milgrom, P. R. (1985). Bid, ask and transaction prices in a specialist market with heterogeneously informed traders. Journal of Financial Economics, 14(1), 71-100.
+- Gresse, C. (2017). Effects of lit and dark market fragmentation on liquidity. Journal of Financial Markets, 35, 1-20.
+- Hasbrouck, J. (1991). Measuring the information content of stock trades. The Journal of Finance, 46(1), 179-207.
+- Hasbrouck, J. (1995). One security, many markets: Determining the contributions to price discovery. The Journal of Finance, 50(4), 1175-1199.
+- Hautsch, N. & Huang, R. (2012). The market impact of a limit order. Journal of Economic Dynamics and Control, 36(4), 501-522.
+- Kissell, R. & Malamut, R. (2006). Algorithmic decision-making framework. Journal of Trading, 1(1), 12-21.
+- Kyle, A. S. (1985). Continuous auctions and insider trading. Econometrica, 53(6), 1315-1335.
+- Lagoudakis, M. G. & Parr, R. (2003). Least-squares policy iteration. Journal of Machine Learning Research, 4, 1107-1149.
+- Laruelle, S., Lehalle, C.-A. & Pagès, G. (2011). Optimal split of orders across liquidity pools. SIAM Journal on Financial Mathematics, 2(1), 1042-1076.
+- Lehalle, C.-A. & Laruelle, S. (Eds.) (2013). Market Microstructure in Practice. World Scientific.
+- Menkveld, A. J. (2013). High frequency trading and the new market makers. Journal of Financial Markets, 16(4), 712-740.
+- Mnih, V., Kavukcuoglu, K., Silver, D. et al. (2015). Human-level control through deep reinforcement learning. Nature, 518, 529-533.
+- Moody, J. & Saffell, M. (2001). Learning to trade via direct reinforcement. IEEE Transactions on Neural Networks, 12(4), 875-889.
+- Nevmyvaka, Y., Feng, Y. & Kearns, M. (2006). Reinforcement learning for optimized trade execution. Proceedings of the 23rd ICML, 673-680.
+- Newey, W. K. & West, K. D. (1987). A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix. Econometrica, 55(3), 703-708.
+- Ning, B., Lin, F. & Hodge, I. (2021). Double deep Q-learning for optimal execution. Applied Intelligence, 51, 5765-5781.
+- O'Hara, M. & Ye, M. (2011). Is market fragmentation harming market quality? Journal of Financial Economics, 100(3), 459-474.
+- Pardo, R. (2008). The Evaluation and Optimization of Trading Strategies (2nd ed.). John Wiley & Sons.
+- Perold, A. (1988). The implementation shortfall: paper versus reality. The Journal of Portfolio Management, 14(3), 4-9.
+- Popper, K. (1959). The Logic of Scientific Discovery. Hutchinson.
+- Schulman, J., Moritz, P., Levine, S., Jordan, M. & Abbeel, P. (2016). High-dimensional continuous control using generalized advantage estimation. Proceedings of ICLR 2016.
+- Schulman, J., Wolski, F., Dhariwal, P., Radford, A. & Klimov, O. (2017). Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347.
+- Silver, D., Huang, A., Maddison, C. J. et al. (2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529, 484-489.
+- Spooner, T., Fearnley, J., Savani, R. & Koukorinis, A. (2018). Market making via reinforcement learning. Proceedings of AAMAS 2018, 434-442.
+- Sutton, R. S. & Barto, A. G. (2018). Reinforcement Learning: An Introduction (2nd ed.). MIT Press.
+- van Hasselt, H., Guez, A. & Silver, D. (2015). Deep reinforcement learning with double Q-learning. Proceedings of AAAI 2016, 2094-2100.
