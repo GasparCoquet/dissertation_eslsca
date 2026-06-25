@@ -7,7 +7,7 @@ and ![caption](path) images.
 """
 import os, re, sys
 from docx import Document
-from docx.shared import Pt, Inches, RGBColor
+from docx.shared import Pt, Inches, RGBColor, Cm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml.ns import qn
@@ -21,9 +21,10 @@ SCRATCH = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "manuscript",
 DOCX_OUT = os.path.join(ROOT, "Dissertation_Coquet_FINAL.docx")
 PDF_OUT = os.path.join(ROOT, "Dissertation_Coquet_FINAL.pdf")
 
-SECTIONS = ["sec_abstract.md", "sec_intro_clean.md", "sec_ch1_clean.md",
-            "sec_ch2_clean.md", "sec_ch3_clean.md", "sec_ch4_clean.md",
-            "sec_conclusion_clean.md", "sec_references_clean.md", "sec_appendixB.md"]
+SECTIONS = ["sec_abstract.md", "sec_frontmatter.md", "sec_intro_clean.md",
+            "sec_ch1_clean.md", "sec_ch2_clean.md", "sec_ch3_clean.md",
+            "sec_ch4_clean.md", "sec_conclusion_clean.md", "sec_references_clean.md",
+            "sec_appendixA.md", "sec_appendixB.md", "sec_appendixC.md", "sec_appendixD.md"]
 
 # ---------------------------------------------------------------- markdown parse
 def parse(md):
@@ -103,14 +104,26 @@ def load_blocks():
     return allb
 
 CHAPTER_STARTS = ("chapter", "general introduction", "general conclusion",
-                  "references", "appendix", "abstract")
+                  "references", "appendix", "abstract", "acknowledg",
+                  "declaration", "list of")
 def is_chapter_h(level, text):
     return level == 1 and text.lower().startswith(CHAPTER_STARTS)
 
 # ---------------------------------------------------------------- DOCX
 def set_base_style(doc):
-    st = doc.styles["Normal"]; st.font.name = "Times New Roman"; st.font.size = Pt(11.5)
+    # School spec: Times New Roman, 12pt body, 1.5 line spacing, justified, 2.5cm margins
+    st = doc.styles["Normal"]; st.font.name = "Times New Roman"; st.font.size = Pt(12)
     st.element.rPr.rFonts.set(qn("w:eastAsia"), "Times New Roman")
+    pf = st.paragraph_format; pf.line_spacing = 1.5; pf.space_after = Pt(6)
+    HSIZE = {1: 16, 2: 14, 3: 13, 4: 12}
+    for lvl, sz in HSIZE.items():
+        try:
+            hs = doc.styles[f"Heading {lvl}"]
+            hs.font.name = "Times New Roman"; hs.font.size = Pt(sz)
+            hs.font.color.rgb = RGBColor(0, 0, 0); hs.font.bold = True
+            hs.element.rPr.rFonts.set(qn("w:eastAsia"), "Times New Roman")
+        except KeyError:
+            pass
 
 def add_toc_field(doc):
     p = doc.add_paragraph()
@@ -122,8 +135,8 @@ def add_toc_field(doc):
 def build_docx(blocks):
     doc = Document(); set_base_style(doc)
     sec = doc.sections[0]
-    for m in (sec.top_margin, ): pass
-    sec.left_margin = sec.right_margin = Inches(1.0)
+    sec.left_margin = sec.right_margin = Cm(2.5)
+    sec.top_margin = sec.bottom_margin = Cm(2.5)
     # Title page
     def center(txt, size, bold=False, italic=False, space=6):
         p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -233,23 +246,23 @@ def render_pdf_body(pdf, blocks, record=False):
             _, level, text = b
             if is_chapter_h(level, text):
                 pdf.add_page()
-            sizes = {1: 16, 2: 13, 3: 11.5, 4: 11}
+            sizes = {1: 16, 2: 14, 3: 13, 4: 12}
             if record and level <= 2:
                 pdf.toc_entries.append((level, text, pdf.page_no()))
-            pdf.ln(2); pdf.set_font(FONT, "B", sizes.get(level, 11))
-            pdf.multi_cell(0, 7, plain(text)); pdf.ln(1)
+            pdf.ln(2.5); pdf.set_font(FONT, "B", sizes.get(level, 12))
+            pdf.multi_cell(0, 7.2, plain(text)); pdf.ln(1.5)
         elif kind == "p":
-            pdf.set_font(FONT, "", 11.5)
-            pdf.multi_cell(0, 6.0, plain(b[1]), align="J"); pdf.ln(1.2)
+            pdf.set_font(FONT, "", 12)
+            pdf.multi_cell(0, 6.4, plain(b[1]), align="J"); pdf.ln(2)
         elif kind == "ul":
-            pdf.set_font(FONT, "", 11.5)
+            pdf.set_font(FONT, "", 12)
             for it in b[1]:
-                pdf.multi_cell(0, 5.8, "•  " + plain(it));
-            pdf.ln(1.2)
+                pdf.multi_cell(0, 6.2, "•  " + plain(it));
+            pdf.ln(2)
         elif kind == "quote":
-            pdf.set_font(FONT, "I", 11)
+            pdf.set_font(FONT, "I", 12)
             pdf.set_x(pdf.l_margin + 6)
-            pdf.multi_cell(0, 5.8, plain(b[1])); pdf.ln(1)
+            pdf.multi_cell(0, 6.2, plain(b[1])); pdf.ln(1.5)
         elif kind == "table":
             render_pdf_table(pdf, b[1])
         elif kind == "img":
@@ -278,7 +291,7 @@ def render_pdf_table(pdf, rows):
 
 def build_pdf(blocks):
     pdf = PDF(format="A4"); pdf.front_pages = 0; register_fonts(pdf)
-    pdf.set_margins(22, 18, 22); pdf.set_auto_page_break(True, 16)
+    pdf.set_margins(25, 20, 25); pdf.set_auto_page_break(True, 18)
     # Pass 1: title+abstract page count + body to collect TOC entries & numbers
     # Front matter
     def front(pdf):
@@ -311,7 +324,7 @@ def build_pdf(blocks):
 
     # ---- pass 2 (final) ----
     pdf2 = PDF(format="A4"); pdf2.front_pages = 1 + n_toc_pages; register_fonts(pdf2)
-    pdf2.set_margins(22, 18, 22); pdf2.set_auto_page_break(True, 16)
+    pdf2.set_margins(25, 20, 25); pdf2.set_auto_page_break(True, 18)
     pdf2.toc_entries = []
     front(pdf2)
     # TOC pages

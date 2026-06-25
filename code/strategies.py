@@ -204,7 +204,7 @@ class PolicyGradientAgent:
         return self.policy_from(self.theta)
 
     def train(self, regimes, iters=22, pop=28, elite_frac=0.25, batch=600,
-              sigma0=0.6, seed=2024, multivenue=False):
+              sigma0=0.6, seed=2024, multivenue=False, history=None):
         from execution_study import draw_scenario, simulate
         rng = np.random.default_rng(seed)
         mu = self.theta.copy()
@@ -223,6 +223,8 @@ class PolicyGradientAgent:
             elite = pops[np.argsort(J)[:n_elite]]
             mu = elite.mean(0)
             sig = elite.std(0) + 1e-3
+            if history is not None:
+                history.append(float(np.min(J)))      # best mean-IS this generation
         self.theta = mu
         return self
 
@@ -265,7 +267,7 @@ class DiscreteValueAgent:
         return self.policy_from(self.W)
 
     def train(self, regimes, iters=26, pop=44, elite_frac=0.2, batch=500,
-              sigma0=0.7, seed=4242, multivenue=False):
+              sigma0=0.7, seed=4242, multivenue=False, history=None):
         from execution_study import draw_scenario, simulate
         rng = np.random.default_rng(seed)
         d = self.nA * self.FEAT_DIM
@@ -283,6 +285,8 @@ class DiscreteValueAgent:
                 J[i] = np.mean([simulate(self.p, sc, pol, multivenue)[0] for sc in scs])
             elite = pops[np.argsort(J)[:n_elite]]
             mu = elite.mean(0); sig = elite.std(0) + 1e-3
+            if history is not None:
+                history.append(float(np.min(J)))
         self.W = mu.reshape(self.nA, self.FEAT_DIM)
         return self
 

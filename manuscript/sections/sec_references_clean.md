@@ -27,6 +27,7 @@
 - Hasbrouck, J. (1991). Measuring the information content of stock trades. The Journal of Finance, 46(1), 179-207.
 - Hasbrouck, J. (1995). One security, many markets: Determining the contributions to price discovery. The Journal of Finance, 50(4), 1175-1199.
 - Hautsch, N. & Huang, R. (2012). The market impact of a limit order. Journal of Economic Dynamics and Control, 36(4), 501-522.
+- Hendricks, D. & Wilcox, D. (2014). A reinforcement learning extension to the Almgren-Chriss framework for optimal trade execution. IEEE Conference on Computational Intelligence for Financial Engineering & Economics (CIFEr), 457-464.
 - Kissell, R. & Malamut, R. (2006). Algorithmic decision-making framework. Journal of Trading, 1(1), 12-21.
 - Kyle, A. S. (1985). Continuous auctions and insider trading. Econometrica, 53(6), 1315-1335.
 - Lagoudakis, M. G. & Parr, R. (2003). Least-squares policy iteration. Journal of Machine Learning Research, 4, 1107-1149.
