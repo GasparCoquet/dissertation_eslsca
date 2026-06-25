@@ -182,12 +182,14 @@ def build_docx(blocks):
         elif kind == "ul":
             for it in b[1]:
                 p = doc.add_paragraph(style="List Bullet")
+                p.paragraph_format.line_spacing = 1.5      # match body (school spec)
                 for tx, bold, ital in inline(it):
                     r = p.add_run(tx); r.bold = bold; r.italic = ital
         elif kind == "quote":
             p = doc.add_paragraph(); p.paragraph_format.left_indent = Inches(0.4)
+            p.paragraph_format.line_spacing = 1.5
             for tx, bold, ital in inline(b[1]):
-                r = p.add_run(tx); r.bold = bold or True if False else bold; r.italic = True
+                r = p.add_run(tx); r.italic = True; r.bold = bold
         elif kind == "table":
             rows = b[1]; ncol = max(len(r) for r in rows)
             t = doc.add_table(rows=0, cols=ncol); t.style = "Table Grid"
