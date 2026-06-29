@@ -185,8 +185,15 @@ def add_toc_field(doc):
     t = OxmlElement('w:t'); t.text = "Right-click here and 'Update Field' to build the table of contents."
     r = OxmlElement('w:r'); r.append(t); fld.append(r); p._p.append(fld)
 
+def force_update_fields(doc):
+    """Set w:updateFields so Word refreshes the TOC field automatically on open
+    (the user no longer has to right-click -> Update Field)."""
+    s = doc.settings.element
+    el = OxmlElement("w:updateFields"); el.set(qn("w:val"), "true")
+    s.append(el)
+
 def build_docx(blocks):
-    doc = Document(); set_base_style(doc)
+    doc = Document(); set_base_style(doc); force_update_fields(doc)
     sec = doc.sections[0]
     sec.left_margin = sec.right_margin = Cm(2.5)
     sec.top_margin = sec.bottom_margin = Cm(2.5)
