@@ -145,6 +145,17 @@ def load_blocks():
         allb += parse(open(os.path.join(SCRATCH, s), encoding="utf-8").read())
     return allb
 
+EQ_DPI = 200          # equation PNGs are rendered at this dpi (see render_equations.py)
+def png_size(path):
+    """Return (width_px, height_px) from a PNG header without extra deps."""
+    import struct
+    with open(path, "rb") as f:
+        head = f.read(24)
+    return struct.unpack(">II", head[16:24])
+
+def is_equation_img(rel_path):
+    return os.path.basename(rel_path).startswith("eq_")
+
 CHAPTER_STARTS = ("chapter", "general introduction", "general conclusion",
                   "references", "appendix", "abstract", "acknowledg",
                   "declaration", "list of")
@@ -259,10 +270,19 @@ def build_docx(blocks):
         elif kind == "img":
             path = os.path.join(ROOT, b[1])
             if os.path.exists(path):
-                doc.add_picture(path, width=Inches(5.7))
-                doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
-                cap = doc.add_paragraph(); cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                rc = cap.add_run(b[2]); rc.italic = True; rc.font.size = Pt(9)
+                if is_equation_img(b[1]):
+                    wpx, _ = png_size(path)
+                    w_in = min(6.3, wpx / EQ_DPI)         # natural size, capped to text width
+                    doc.add_picture(path, width=Inches(w_in))
+                    doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    if b[2]:                               # optional equation label/caption
+                        cap = doc.add_paragraph(); cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                        rc = cap.add_run(b[2]); rc.italic = True; rc.font.size = Pt(9)
+                else:
+                    doc.add_picture(path, width=Inches(5.7))
+                    doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    cap = doc.add_paragraph(); cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    rc = cap.add_run(b[2]); rc.italic = True; rc.font.size = Pt(9)
     doc.save(DOCX_OUT)
     print("DOCX written:", DOCX_OUT)
 
@@ -349,10 +369,20 @@ def render_pdf_body(pdf, blocks, record=False):
         elif kind == "img":
             path = os.path.join(ROOT, b[1])
             if os.path.exists(path):
-                if pdf.get_y() > 200: pdf.add_page()
-                w = 150; pdf.image(path, x=(210 - w) / 2, w=w)
-                pdf.set_font(FONT, "I", 9); pdf.set_text_color(90)
-                pdf.multi_cell(0, 5, plain(b[2]), align="C"); pdf.set_text_color(0); pdf.ln(2)
+                if is_equation_img(b[1]):
+                    wpx, hpx = png_size(path)
+                    w_mm = min(160.0, wpx / EQ_DPI * 25.4)   # natural size, capped
+                    h_mm = w_mm * hpx / wpx
+                    y0 = pdf.get_y()
+                    if y0 + h_mm + 8 > pdf.h - pdf.b_margin:
+                        pdf.add_page(); y0 = pdf.get_y()
+                    pdf.image(path, x=(210 - w_mm) / 2, y=y0 + 1.5, w=w_mm)
+                    pdf.set_y(y0 + 1.5 + h_mm + 3)           # advance below the equation
+                else:
+                    if pdf.get_y() > 200: pdf.add_page()
+                    w = 150; pdf.image(path, x=(210 - w) / 2, w=w)
+                    pdf.set_font(FONT, "I", 9); pdf.set_text_color(90)
+                    pdf.multi_cell(0, 5, plain(b[2]), align="C"); pdf.set_text_color(0); pdf.ln(2)
 
 def render_pdf_table(pdf, rows):
     ncol = max(len(r) for r in rows)
