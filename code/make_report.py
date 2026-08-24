@@ -265,12 +265,5 @@ for i, txt in enumerate([
     pdf.set_font("Times", "B", 11.5); pdf.cell(7, 6.2, f"{i+1}.")
     pdf.set_font("Times", "", 11.5); pdf.multi_cell(0, 6.2, txt, align="J"); pdf.ln(0.5)
 
-H("Note on integration with the main dissertation", 12.5)
-P("This supplement replaces the provisional Chapter 4 and the data section of Chapter 3. Across the rest of the "
-  "document, every reference to 'real tick-by-tick Level 2 / Refinitiv / Bloomberg' data must be reworded to the "
-  "calibrated simulator; the fabricated 43% / 33% / 7% headline figures and the impossible-dated interviews must be "
-  "removed; and the dangling 'Section 3.7' reference, duplicated sections 4.4-4.6, and appendix ordering must be "
-  "fixed. See REWRITE_Ch3-4_HONEST.md for the exact edit-list.")
-
 pdf.output(OUT)
 print("written", OUT, "pages:", pdf.page_no())
