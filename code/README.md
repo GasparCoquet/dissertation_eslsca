@@ -9,7 +9,7 @@ interpreted). See Chapter 3 of the dissertation for the methodology and Section 
 | File | Purpose |
 |---|---|
 | `execution_study.py` | Market simulator: price + U-shape seasonality + Almgren impact + AR(1) order-flow signal + multi-venue routing. |
-| `strategies.py` | Baselines (TWAP, VWAP, Almgren-Chriss) + RL agents (PPO-family policy-gradient, DQN-family discrete value). Both are **linear policies trained by Cross-Entropy search**, not neural networks - the deep architectures of section 1.4.2 are a stated extension, not implemented here. |
+| `strategies.py` | Baselines (TWAP, VWAP, Almgren-Chriss) + RL agents (PPO-family policy-gradient, DQN-family discrete value). Both are **linear policies trained by Cross-Entropy search**, not neural networks; the deep architectures of section 1.4.2 are a stated extension, not implemented here. |
 | `experiments.py` | Runs H1/H2/H3 + robustness, writes `results/` and `figures/`. |
 | `calibration.py` | Optional: re-anchor volatility regimes to free Yahoo data (needs internet + `yfinance`). |
 | `make_report.py` | Renders the empirical supplement PDF from `results/`. |
@@ -34,9 +34,9 @@ mean IS in bps:
 | DQN-family | 12.52 | 16.86 | 91.7 | +29.0% |
 | PPO-family | 11.68 | 16.87 | 80.8 | +33.8% |
 
-**Read the Signal-TWAP row against the PPO row.** A trivial signal-proportional rule -
-scale the TWAP rate by `max(0, 1 + 0.5 * signal)`, coefficient fixed in advance on a
-separate seed - already captures a 32.9% reduction versus TWAP. The learned policy
+**Read the Signal-TWAP row against the PPO row.** A trivial signal-proportional rule
+(scale the TWAP rate by `max(0, 1 + 0.5 * signal)`, coefficient fixed in advance on a
+separate seed) already captures a 32.9% reduction versus TWAP. The learned policy
 adds about **1.3%** on top of it. Almost the entire headline gain is the value of
 conditioning on an order-flow signal, which any signal-aware rule captures; the value
 of the RL policy specifically is that 1.3% residual and, more cleanly, the **6.7%**
